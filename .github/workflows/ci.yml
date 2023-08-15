@@ -15,17 +15,16 @@ jobs:
       - name: 🛎️ Checkout
         uses: actions/checkout@v3
 
-      # Test
-      - name: 🌡️ Test
-        run: uname -a
+      - name: Install dependencies 🔧
+        run: sudo apt-get install flake8
 
-      # Test Linux operating systems
-      - name: 🐧 Test Debian 11 (Bullseye)
-        run: |
-          docker pull debian:11
-          docker run -v $PWD:/temp/test debian:11 uname -a
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v3
 
-      - name: 🐧 Test Rocky Linux 8
-        run: |
-          docker pull rockylinux:8
-          docker run -v $PWD:/temp/test rockylinux:8 uname -a
+      # Check Bash scripts
+      - name: Bash 🔎
+        run: shellcheck *.sh
+
+      # Check Python code
+      - name: Python 🔎
+        run: flake8 --ignore=W292 --max-line-length=127 --show-source --statistics *.py

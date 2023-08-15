@@ -1,0 +1,31 @@
+name: "CI"
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: CI/CD Test
+    # https://github.com/actions/virtual-environments/
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v3
+
+      # Test
+      - name: 🌡️ Test
+        run: uname -a
+
+      # Test Linux operating systems
+      - name: 🐧 Test Debian 11 (Bullseye)
+        run: |
+          docker pull debian:11
+          docker run -v $PWD:/temp/test debian:11 uname -a
+
+      - name: 🐧 Test Rocky Linux 8
+        run: |
+          docker pull rockylinux:8
+          docker run -v $PWD:/temp/test rockylinux:8 uname -a

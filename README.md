@@ -24,10 +24,10 @@ Supported OpenAI API services:
 
 | OpenAI               | API                    | Supported |
 |----------------------|------------------------|-----------|
-| List models          | `/v1/models`           | [x]       |
-| Chat Completions     | `/v1/chat/completions` | [x]       |
-| Completions (Legacy) | `/v1/completions`      | [ ]       |
-| Embeddings           | `/v1/embeddings`       | [ ]       |
+| List models          | `/v1/models`           | ✅        |
+| Chat Completions     | `/v1/chat/completions` | ✅        |
+| Completions (Legacy) | `/v1/completions`      | ❌        |
+| Embeddings           | `/v1/embeddings`       | ❌        |
 
 The software is developed in [Python](https://www.python.org/)
 and based on [FastAPI](https://fastapi.tiangolo.com/)

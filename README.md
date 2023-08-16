@@ -180,7 +180,7 @@ The following variables with default values exist:
 | GOOGLE_CLOUD_PROJECT_ID | [DEFAULT_AUTH_PROJECT] | Identifier for your project. If not specified, the project of authentication is used. |
 | HOST                    | 0.0.0.0                | Bind socket to this host. |
 | MAX_OUTPUT_TOKENS       | 512                    | Token limit determines the maximum amount of text output from one prompt. Can be overridden by the end user as required by the OpenAI API specification. |
-| MODEL_NAME              | chat-bison             | One of the [foundation models]((https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#foundation_models)) that are available in Vertex AI. |
+| MODEL_NAME              | chat-bison             | One of the [foundation models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#foundation_models) that are available in Vertex AI. |
 | OPENAI_API_KEY          | sk-[RANDOM_HEX]        | Key used for authentication against the application. |
 | PORT                    | 8000                   | Bind socket to this port. |
 | TEMPERATURE             | 0.2                    | Sampling temperature, it controls the degree of randomness in token selection. Can be overridden by the end user as required by the OpenAI API specification. |

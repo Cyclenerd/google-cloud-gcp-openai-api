@@ -2,6 +2,6 @@ fastapi==0.103.0
 uvicorn==0.23.2
 sse-starlette==1.6.5
 langchain==0.0.276
-transformers==4.31.0
+transformers==4.32.1
 google-cloud-aiplatform==1.31.1
 google-cloud-discoveryengine==0.10.0

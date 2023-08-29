@@ -39,7 +39,7 @@ and [LangChain](https://docs.langchain.com/docs/).
 
 Everything is designed to be very simple,
 so you can easily adjust the source code to your individual needs.
-Any contribution, feedback and PR is welcome!
+You can find an example of the customization in the [`cologne`](https://github.com/Cyclenerd/google-cloud-gcp-openai-api/tree/cologne#readme) branch.
 
 ## Deploying to Cloud Run
 

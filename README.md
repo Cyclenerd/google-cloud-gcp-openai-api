@@ -1,37 +1,14 @@
-# OpenAI API for Google Cloud Vertex AI
+# kölschGPT - Vertex AI ob Kölsch
 
 [![Bagde: Google Cloud](https://img.shields.io/badge/Google%20Cloud-%234285F4.svg?logo=google-cloud&logoColor=white)](#readme)
 [![Bagde: OpenAI](https://img.shields.io/badge/OpenAI-%23412991.svg?logo=openai&logoColor=white)](#readme)
 [![Bagde: Python](https://img.shields.io/badge/Python-3670A0?logo=python&logoColor=ffdd54)](#readme)
 
-This project is a drop-in replacement REST API for Vertex AI that is compatible with the OpenAI API specifications.
+This brache shows how you can customize the [drop-in replacement REST API for Vertex AI](https://github.com/Cyclenerd/google-cloud-gcp-openai-api) and extend it with your own information from Google Drive documents and sheets.
 
-Examples:
+Example:
 
-| Chat with Bard in Chatbot UI                              | Get help from Bard in VSCode                      |
-|-----------------------------------------------------------|---------------------------------------------------|
-| ![Screenshot: Chatbot UI chat](./img/chatbot-ui-chat.png) | ![Screenshot: VSCode chat](./img/vscode-chat.png) |
-
-This project is inspired by the idea of [LocalAI](https://github.com/go-skynet/LocalAI)
-but with the focus on making [Google Cloud Platform Vertex AI PaLM](https://ai.google/) more accessible to anyone.
-
-A Google Cloud Run service is installed that translates the OpenAI API calls to Vertex AI (PaLM).
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="img/openai-api-cloud-run-vertex-dark.png">
-    <img src="img/openai-api-cloud-run-vertex.png" alt="Diagram: OpenAI, Google Cloud Run and Vertex AI">
-  </picture>
-</p>
-
-Supported OpenAI API services:
-
-| OpenAI               | API                    | Supported |
-|----------------------|------------------------|-----------|
-| List models          | `/v1/models`           | ✅        |
-| Chat Completions     | `/v1/chat/completions` | ✅        |
-| Completions (Legacy) | `/v1/completions`      | ❌        |
-| Embeddings           | `/v1/embeddings`       | ❌        |
+![Screenshot: Slalom at DIGITAL X in Cologe](./img/digitalx.png)
 
 The software is developed in [Python](https://www.python.org/)
 and based on [FastAPI](https://fastapi.tiangolo.com/)
@@ -39,7 +16,18 @@ and [LangChain](https://docs.langchain.com/docs/).
 
 Everything is designed to be very simple,
 so you can easily adjust the source code to your individual needs.
-Any contribution, feedback and PR is welcome!
+
+Flow:
+
+1. Load Google Docs and Google Sheets
+1. Split Google Workspace documents into chunks
+1. Generate vector embeddings
+1. Store Facebook AI similarity search index in Google Storage bucket
+1. Mount Google Storage bucket via Google Storage FUSE to Cloud Run instance
+
+![Diagram: Google Cloud Run, Vertex AI, Google Docs and FAISS](./img/faiss.png)
+
+More general information can be found in the [`master`](https://github.com/Cyclenerd/google-cloud-gcp-openai-api) branch.
 
 ## Deploying to Cloud Run
 
@@ -173,13 +161,12 @@ Response:
 
 The configuration of the software can be done with environment variables.
 
-![Screenshot: Google Cloud run](./img/cloud-run-env.png)
-
 The following variables with default values exist:
 
 | Variable                | Default                | Description |
 |-------------------------|------------------------|-------------|
 | DEBUG                   | False                  | Show debug messages that help during development. |
+| FAISS_INDEX             | faiss_index            | Folder path to load local Facebook AI similarity search index. |
 | GOOGLE_CLOUD_LOCATION   | us-central1            | [Google Cloud Platform region](https://gcloud-compute.com/regions.html) for API calls. |
 | GOOGLE_CLOUD_PROJECT_ID | [DEFAULT_AUTH_PROJECT] | Identifier for your project. If not specified, the project of authentication is used. |
 | HOST                    | 0.0.0.0                | Bind socket to this host. |
@@ -190,6 +177,8 @@ The following variables with default values exist:
 | TEMPERATURE             | 0.2                    | Sampling temperature, it controls the degree of randomness in token selection. Can be overridden by the end user as required by the OpenAI API specification. |
 | TOP_K                   | 40                     | How the model selects tokens for output, the next token is selected from. | 
 | TOP_P                   | 0.8                    | Tokens are selected from most probable to least until the sum of their. Can be overridden by the end user as required by the OpenAI API specification. |
+| VECTOR_BUCKET           | vector-bucket-missing  | Google Cloud storage bucket with vector store. |
+| VECTOR_DIR              | /vector                | Local directory (mount point) for vector store. |
 
 ### OpenAI Client Library
 
@@ -211,8 +200,6 @@ the following environment variables must be set:
 | OPENAI_API_KEY  | API key generated during deployment |
 | OPENAI_API_HOST | Google Cloud Run URL                |
 
-![Screenshot: Chatbot UI container](./img/chatbot-ui-env.png)
-
 #### Deploying Chatbot UI to Cloud Run
 
 Run the following script to create a container image from the GitHub source code
@@ -223,61 +210,6 @@ export OPENAI_API_KEY="sk-XYZ"
 export OPENAI_API_HOST="https://openai-api-vertex-XYZ.a.run.app"
 bash chatbot-ui.sh
 ```
-
-### Chatbox
-
-Set the following [Chatbox](https://chatboxai.app/) settings:
-
-| Setting        | Value                               |
-|----------------|-------------------------------------|
-| AI Provider    | OpenAI API                          |
-| OpenAI API Key | API key generated during deployment |
-| API Host       | Google Cloud Run URL                |
-
-![Screenshot: Chatbot UI container](./img/chatbox-settings.png)
-
-### VSCode-OpenAI
-
-The [VSCode-OpenAI extension](https://marketplace.visualstudio.com/items?itemName=AndrewButson.vscode-openai) is a powerful and versatile tool designed to integrate OpenAI features seamlessly into your code editor.
-
-To activate the setup, you have two options:
-
-* either use the command "vscode-openai.configuration.show.quickpick" or
-* access it through the vscode-openai Status Bar located at the bottom left corner of VSCode.
-
-![Screenshot: VSCode settings](./img/vscode-settings.png)
-
-Select `openai.com` and enter the Google Cloud Run URL with `/v1` during setup.
-
-### ChatGPT Discord Bot
-
-When deploying the [Discord Bot](https://github.com/openai/gpt-discord-bot) application,
-the following environment variables must be set:
-
-| Variable        | Value                               |
-|-----------------|-------------------------------------|
-| OPENAI_API_KEY  | API key generated during deployment |
-| OPENAI_API_BASE | Google Cloud Run URL with `/v1`     |
-
-### ChatGPT in Slack
-
-When deploying the [ChatGPT in Slack](https://github.com/seratch/ChatGPT-in-Slack) application,
-the following environment variables must be set:
-
-| Variable        | Value                               |
-|-----------------|-------------------------------------|
-| OPENAI_API_KEY  | API key generated during deployment |
-| OPENAI_API_BASE | Google Cloud Run URL with `/v1`     |
-
-### ChatGPT Telegram Bot
-
-When deploying the [ChatGPT Telegram Bot](https://github.com/karfly/chatgpt_telegram_bot) application,
-the following environment variables must be set:
-
-| Variable        | Value                               |
-|-----------------|-------------------------------------|
-| OPENAI_API_KEY  | API key generated during deployment |
-| OPENAI_API_BASE | Google Cloud Run URL with `/v1`     |
 
 ## Contributing
 

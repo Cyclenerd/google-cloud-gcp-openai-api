@@ -65,18 +65,23 @@ gcloud artifacts repositories create "docker-openai-api" \
 
 # Create container
 gcloud builds submit \
-    --tag="$MY_GOOGLE_CLOUD_LOCATION-docker.pkg.dev/$MY_PROJECT_ID/docker-openai-api/vertex:latest" \
+    --tag="$MY_GOOGLE_CLOUD_LOCATION-docker.pkg.dev/$MY_PROJECT_ID/docker-openai-api/cologne:latest" \
     --timeout="30m" \
     --region="$MY_GOOGLE_CLOUD_LOCATION" \
     --default-buckets-behavior="regional-user-owned-bucket" \
     --quiet
 
+# Configuration to mount local Facebook AI similarity search index
+MY_VECTOR_BUCKET=${VECTOR_BUCKET:-"test-nils-vector-store"}
+MY_VECTOR_DIR=${VECTOR_DIR:-"/vector"}
+MY_FAISS_INDEX=${FAISS_INDEX:-"/vector"}
+
 # Deploy Cloud Run service
-gcloud run deploy "openai-api-vertex" \
-    --image="$MY_GOOGLE_CLOUD_LOCATION-docker.pkg.dev/$MY_PROJECT_ID/docker-openai-api/vertex:latest" \
-    --description="OpenAI API for Google Cloud Vertex AI" \
+gcloud run deploy "openai-api-vertex-cologne" \
+    --image="$MY_GOOGLE_CLOUD_LOCATION-docker.pkg.dev/$MY_PROJECT_ID/docker-openai-api/cologne:latest" \
+    --description="Vertex AI ob Kölsch" \
     --region="$MY_GOOGLE_CLOUD_LOCATION" \
-    --set-env-vars="OPENAI_API_KEY=$MY_OPENAI_API_KEY,GOOGLE_CLOUD_LOCATION=$MY_GOOGLE_CLOUD_LOCATION" \
+    --set-env-vars="OPENAI_API_KEY=$MY_OPENAI_API_KEY,GOOGLE_CLOUD_LOCATION=$MY_GOOGLE_CLOUD_LOCATION,VECTOR_BUCKET=$MY_VECTOR_BUCKET,VECTOR_DIR=$MY_VECTOR_DIR,FAISS_INDEX=$MY_FAISS_INDEX" \
     --max-instances=10 \
     --allow-unauthenticated \
     --quiet

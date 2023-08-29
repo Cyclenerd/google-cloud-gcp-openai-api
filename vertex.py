@@ -14,11 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime
 import json
 import os
 import secrets
+import sys
 import time
-import datetime
 import uvicorn
 
 # FastAPI
@@ -36,8 +37,11 @@ from google.cloud import aiplatform
 # LangChain
 import langchain
 from langchain.chat_models import ChatVertexAI
-from langchain.chains import ConversationChain
+from langchain.embeddings import VertexAIEmbeddings
+from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
+from langchain.vectorstores import FAISS
+from langchain.prompts import PromptTemplate
 
 # Google authentication
 credentials, project_id = google.auth.default()
@@ -68,6 +72,12 @@ default_top_p = os.environ.get("TOP_P", "0.8")
 default_api_key = f"sk-{secrets.token_hex(21)}"
 api_key = os.environ.get("OPENAI_API_KEY", default_api_key)
 print(f"API key: {api_key}")
+# Folder path to load local Facebook AI similarity search index
+faiss_index = os.environ.get("FAISS_INDEX", "faiss_index")
+print(f"Facebook AI similarity search index: {faiss_index}")
+if not os.path.isfile(f"{faiss_index}/index.faiss"):
+    print("ERROR: FAISS index not found!")
+    sys.exit(9)
 
 app = FastAPI(
     title='OpenAI API',
@@ -270,7 +280,7 @@ async def chat_completions(body: ChatBody, request: Request):
 
     # Get user question
     question = body.messages[-1]
-    if question.role == 'user' or question.role == 'assistant':
+    if question.role == 'user':
         question = question.content
     else:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "No Question Found")
@@ -302,14 +312,9 @@ async def chat_completions(body: ChatBody, request: Request):
     # - chat-bison: 4096
     # - codechat-bison: 6144
     memory = ConversationBufferMemory(
-        memory_key="history",
-        max_token_limit=2048,
+        memory_key="chat_history",
+        max_token_limit=1024,
         return_messages=True
-    )
-    # Today
-    memory.chat_memory.add_user_message("What day is today?")
-    memory.chat_memory.add_ai_message(
-        datetime.date.today().strftime("Today is %A, %B %d, %Y")
     )
     # Add history
     for message in body.messages:
@@ -320,12 +325,56 @@ async def chat_completions(body: ChatBody, request: Request):
         elif message.role == 'assistant':
             memory.chat_memory.add_ai_message(message.content)
 
-    # Get Vertex AI output
-    conversation = ConversationChain(
-        llm=llm,
-        memory=memory,
+    # Embedding
+    embeddings = VertexAIEmbeddings(
+        project=project_id,
+        location=location,
+        max_retries=6,
+        request_parallelism=5,
     )
-    answer = conversation.predict(input=question)
+    # Load local Facebook AI similarity search index
+    # https://api.python.langchain.com/en/latest/vectorstores/
+    # langchain.vectorstores.faiss.FAISS.html
+    db = FAISS.load_local(faiss_index, embeddings)
+    # Expose index to the retriever
+    retriever = db.as_retriever(
+        search_type="similarity",
+        search_kwargs={"k": 2}
+    )
+
+    # Get Vertex AI output
+    today = datetime.date.today().strftime("%A, %B %d, %Y")
+    template = f"""
+Act as a experienced Cologne tour guide.
+Answer friendly but if you get a question that is not related to Cologne deny the answer with: "Do pack ich mer an der Kopp. Ich bin ene kölsche Jung! Andere Themen und Städte kenne ich nit.".
+Only answer questions within the <tag> section.
+Always answer in German.
+Today is {today}
+
+context:
+{{context}}
+
+chat history:
+{{chat_history}}
+
+tourist question:
+<tag>{{question}}<tag>
+
+you as tour guide need to obey rules when answering:
+1. only answer questions about Cologne. if there is another question answer with "Can I help you with something else about Cologne?"
+"""
+    prompt = PromptTemplate(
+        input_variables=["chat_history", "question", "context"],
+        template=template
+    )
+    conversational_retrieval = ConversationalRetrievalChain.from_llm(
+        llm=llm,
+        retriever=retriever,
+        memory=memory,
+        combine_docs_chain_kwargs={"prompt": prompt}
+    )
+    result = conversational_retrieval({"question": question})
+    answer = result["answer"]
 
     if debug:
         print(f"stream = {body.stream}")

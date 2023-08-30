@@ -328,7 +328,6 @@ async def chat_completions(body: ChatBody, request: Request):
     # Embedding
     embeddings = VertexAIEmbeddings(
         project=project_id,
-        location=location,
         max_retries=6,
         request_parallelism=5,
     )

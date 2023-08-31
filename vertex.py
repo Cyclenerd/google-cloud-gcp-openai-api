@@ -52,8 +52,8 @@ project = os.environ.get("GOOGLE_CLOUD_PROJECT_ID", project_id)
 location = os.environ.get("GOOGLE_CLOUD_LOCATION", "us-central1")
 print(f"Google Cloud project identifier: {project}")
 print(f"Google Cloud location: {location}")
-# LLM chat model name to use (chat-bison or codechat-bison)
-model_name = os.environ.get("MODEL_NAME", "codechat-bison-32k")
+# LLM chat model name to use
+model_name = os.environ.get("MODEL_NAME", "chat-bison")
 print(f"LLM chat model name: {model_name}")
 # Token limit determines the maximum amount of text output from one prompt
 default_max_output_tokens = os.environ.get("MAX_OUTPUT_TOKENS", "512")

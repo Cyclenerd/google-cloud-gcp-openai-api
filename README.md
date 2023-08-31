@@ -29,6 +29,14 @@ Flow:
 
 More general information can be found in the [`master`](https://github.com/Cyclenerd/google-cloud-gcp-openai-api) branch.
 
+## Step by Step Guide
+
+A Jupyter notebook [`koelschGPT.ipynb`](./koelschGPT.ipynb) with step-by-step instructions is prepared.
+It will help you to perform all the necessary steps.
+
+* [Open in Colab](https://colab.research.google.com/github/Cyclenerd/google-cloud-gcp-openai-api/blob/cologne/koelschGPT.ipynb)
+* [Open in Vertex AI Workbench](https://console.cloud.google.com/vertex-ai/workbench/deploy-notebook?download_url=https://raw.githubusercontent.com/Cyclenerd/google-cloud-gcp-openai-api/cologne/koelschGPT.ipynb)
+
 ## Deploying to Cloud Run
 
 Requirements:

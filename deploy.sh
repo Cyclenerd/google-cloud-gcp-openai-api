@@ -36,6 +36,7 @@ MY_GCP_SERVICES=(
     'artifactregistry.googleapis.com'
     'cloudbuild.googleapis.com'
     'containeranalysis.googleapis.com'
+    'containerscanning.googleapis.com'
 )
 for MY_GCP_SERVICE in "${MY_GCP_SERVICES[@]}"; do
     gcloud services enable "$MY_GCP_SERVICE" --quiet

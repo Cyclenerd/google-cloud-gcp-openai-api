@@ -30,25 +30,33 @@ echo "Google Cloud project ID: $MY_PROJECT_ID"
 
 # Enable APIs
 echo "Enable APIs..."
+# Define the list of GCP services to enable
 MY_GCP_SERVICES=(
-    'aiplatform.googleapis.com'
-    'run.googleapis.com'
-    'artifactregistry.googleapis.com'
-    'cloudbuild.googleapis.com'
-    'containeranalysis.googleapis.com'
-    'containerscanning.googleapis.com'
+    'aiplatform.googleapis.com'  # Vertex AI Platform
+    'run.googleapis.com'  # Cloud Run
+    'artifactregistry.googleapis.com'  # Artifact Registry
+    'cloudbuild.googleapis.com'  # Cloud Build
+    'containeranalysis.googleapis.com'  # Container Analysis
+    'containerscanning.googleapis.com'  # Container Scanning
 )
+# Enable each GCP service
 for MY_GCP_SERVICE in "${MY_GCP_SERVICES[@]}"; do
     gcloud services enable "$MY_GCP_SERVICE" --quiet
 done
 
-# Generete API key
+# Generate a random string for the OpenAI API key
 MY_RANDOM=$(openssl rand -hex 21)
+# Set the OpenAI API key from environment variable
+# or generate one if not set
 MY_OPENAI_API_KEY=${OPENAI_API_KEY:-"sk-$MY_RANDOM"}
 echo
+# Output a line with API key
 echo "🔑 API key: $MY_OPENAI_API_KEY"
+# Check if macOS clipboard is available
 if command -v pbcopy >/dev/null 2>&1; then
+    # Copy API key to macOS clipboard
     echo "$MY_OPENAI_API_KEY" | pbcopy
+    # Output a line with emoji
     echo "(📋 Copied to macOS clipboard)"
 fi
 echo

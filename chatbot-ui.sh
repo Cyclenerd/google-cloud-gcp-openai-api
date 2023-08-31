@@ -50,11 +50,11 @@ gcloud builds submit "https://github.com/mckaywrigley/chatbot-ui.git" \
     --quiet
 
 # Deploy Cloud Run service
-gcloud run deploy "chatbox-ui" \
+gcloud run deploy "chatbot-ui" \
     --image="$MY_GOOGLE_CLOUD_LOCATION-docker.pkg.dev/$MY_PROJECT_ID/docker-openai-api/chatbot-ui:latest" \
     --description="Chatbot UI" \
     --region="$MY_GOOGLE_CLOUD_LOCATION" \
     --set-env-vars="OPENAI_API_KEY=$MY_OPENAI_API_KEY,OPENAI_API_HOST=$MY_OPENAI_API_HOST" \
-    --max-instances=5 \
+    --max-instances=2 \
     --allow-unauthenticated \
     --quiet

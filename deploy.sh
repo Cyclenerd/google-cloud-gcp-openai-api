@@ -36,6 +36,7 @@ MY_GCP_SERVICES=(
     'artifactregistry.googleapis.com'
     'cloudbuild.googleapis.com'
     'containeranalysis.googleapis.com'
+    'containerscanning.googleapis.com'
 )
 for MY_GCP_SERVICE in "${MY_GCP_SERVICES[@]}"; do
     gcloud services enable "$MY_GCP_SERVICE" --quiet
@@ -77,6 +78,6 @@ gcloud run deploy "openai-api-vertex" \
     --description="OpenAI API for Google Cloud Vertex AI" \
     --region="$MY_GOOGLE_CLOUD_LOCATION" \
     --set-env-vars="OPENAI_API_KEY=$MY_OPENAI_API_KEY,GOOGLE_CLOUD_LOCATION=$MY_GOOGLE_CLOUD_LOCATION" \
-    --max-instances=10 \
+    --max-instances=4 \
     --allow-unauthenticated \
     --quiet

@@ -53,7 +53,7 @@ location = os.environ.get("GOOGLE_CLOUD_LOCATION", "us-central1")
 print(f"Google Cloud project identifier: {project}")
 print(f"Google Cloud location: {location}")
 # LLM chat model name to use (chat-bison or codechat-bison)
-model_name = os.environ.get("MODEL_NAME", "chat-bison")
+model_name = os.environ.get("MODEL_NAME", "codechat-bison-32k")
 print(f"LLM chat model name: {model_name}")
 # Token limit determines the maximum amount of text output from one prompt
 default_max_output_tokens = os.environ.get("MAX_OUTPUT_TOKENS", "512")
@@ -283,8 +283,15 @@ async def chat_completions(body: ChatBody, request: Request):
     # Note: Max output token:
     # - chat-bison: 1024
     # - codechat-bison: 2048
-    if model_name == 'codechat-bison' and max_output_tokens > 2048:
-        max_output_tokens = 2048
+    # - ..-32k: The total amount of input and output tokens adds up to 32k.
+    #           For example, if you specify 16k of input tokens,
+    #           then you can receive up to 16k of output tokens.
+    if model_name == 'codechat-bison':
+        if max_output_tokens > 2048:
+            max_output_tokens = 2048
+    elif model_name.find("32k"):
+        if max_output_tokens > 16000:
+            max_output_tokens = 16000
     elif max_output_tokens > 1024:
         max_output_tokens = 1024
 

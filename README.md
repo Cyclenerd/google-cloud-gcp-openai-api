@@ -43,6 +43,16 @@ so you can easily adjust the source code to your individual needs.
 > **Note**
 > You can find an example of customization in the [`cologne`](https://github.com/Cyclenerd/google-cloud-gcp-openai-api/tree/cologne#readme) branch.
 
+
+## Step by Step Guide
+
+A Jupyter notebook [`Vertex_AI_Chat.ipynb`](./Vertex_AI_Chat.ipynb) with step-by-step instructions is prepared.
+It will help you to deploy the API backend and [Chatbot UI](https://github.com/mckaywrigley/chatbot-ui) frontend as Google Cloud Run service.
+
+* [Open in Colab](https://colab.research.google.com/github/Cyclenerd/google-cloud-gcp-openai-api/blob/master/Vertex_AI_Chat.ipynb)
+* [Open in Vertex AI Workbench](https://console.cloud.google.com/vertex-ai/workbench/deploy-notebook?download_url=https://raw.githubusercontent.com/Cyclenerd/google-cloud-gcp-openai-api/master/Vertex_AI_Chat.ipynb)
+
+
 ## Deploying to Cloud Run
 
 Requirements:

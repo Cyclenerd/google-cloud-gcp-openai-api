@@ -119,11 +119,21 @@ Set default project:
 gcloud auth application-default set-quota-project [PROJECT_ID]
 ```
 
-Run app:
+Run with default model:
 
 ```bash
 export DEBUG="True"
 export OPENAI_API_KEY="sk-XYZ"
+uvicorn vertex:app --reload
+```
+
+Or run with `codechat-bison-32k` 32k model:
+
+```bash
+export DEBUG="True"
+export OPENAI_API_KEY="sk-XYZ"
+export MODEL_NAME="codechat-bison-32k"
+export MAX_OUTPUT_TOKENS="16000"
 uvicorn vertex:app --reload
 ```
 

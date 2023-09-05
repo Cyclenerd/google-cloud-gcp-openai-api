@@ -17,13 +17,13 @@ jobs:
     steps:
 
       - name: 🛎️ Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install dependencies 🔧
         run: sudo apt-get install flake8
 
       - name: 🛎️ Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Check Bash scripts
       - name: Bash 🔎

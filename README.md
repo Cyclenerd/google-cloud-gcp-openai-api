@@ -83,7 +83,7 @@ and deploy that container as a public API (which allows unauthenticated calls) i
 bash deploy.sh
 ```
 
-> Note: You can change the OpenAI API key and Google Cloud region with environment variables:
+> Note: You can change the generated fake OpenAI API key and Google Cloud region with environment variables:
 > 
 > ```bash
 > export OPENAI_API_KEY="sk-XYZ"

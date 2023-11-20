@@ -83,7 +83,7 @@ and deploy that container as a public API (which allows unauthenticated calls) i
 bash deploy.sh
 ```
 
-> Note: You can change the generated fake OpenAI API key and Google Cloud region with environment variables:
+> Note: You can change the generated *fake* OpenAI API key and Google Cloud region with environment variables:
 > 
 > ```bash
 > export OPENAI_API_KEY="sk-XYZ"
@@ -207,7 +207,7 @@ The following variables with default values exist:
 | HOST                    | 0.0.0.0                | Bind socket to this host. |
 | MAX_OUTPUT_TOKENS       | 512                    | Token limit determines the maximum amount of text output from one prompt. Can be overridden by the end user as required by the OpenAI API specification. |
 | MODEL_NAME              | chat-bison             | One of the [foundation models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#foundation_models) that are available in Vertex AI. |
-| OPENAI_API_KEY          | sk-[RANDOM_HEX]        | Key used for authentication against the application. |
+| OPENAI_API_KEY          | sk-[RANDOM_HEX]        | Self-generated *fake* OpenAI API key used for authentication against the application. |
 | PORT                    | 8000                   | Bind socket to this port. |
 | TEMPERATURE             | 0.2                    | Sampling temperature, it controls the degree of randomness in token selection. Can be overridden by the end user as required by the OpenAI API specification. |
 | TOP_K                   | 40                     | How the model selects tokens for output, the next token is selected from. | 
@@ -219,7 +219,7 @@ If your application uses [client libraries](https://github.com/openai/openai-pyt
 you only need to modify the `OPENAI_API_BASE` environment variable to match your Google Cloud Run endpoint URL:
 
 ```bash
-export OPENAI_API_BASE="https://https://openai-api-vertex-XYZ.a.run.app/v1"
+export OPENAI_API_BASE="https://openai-api-vertex-XYZ.a.run.app/v1"
 python your_openai_app.py
 ```
 

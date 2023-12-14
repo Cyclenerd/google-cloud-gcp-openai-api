@@ -200,6 +200,12 @@ Response:
 }
 ```
 
+### Bruno API client
+
+![Screenshot: Bruno API client](./img/bruno.png)
+
+Download export for [Bruno](https://www.usebruno.com/) API client: [`bruno-export.json`](./bruno-export.json)
+
 ## Configuration
 
 The configuration of the software can be done with environment variables.

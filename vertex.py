@@ -281,6 +281,8 @@ async def chat_completions(body: ChatBody, request: Request):
     top_p = float(body.top_p or default_top_p)
     max_output_tokens = int(body.max_tokens or default_max_output_tokens)
     # Note: Max output token:
+    # - gemini-pro: 8192
+    #   https://cloud.google.com/vertex-ai/docs/generative-ai/model-reference/gemini
     # - chat-bison: 1024
     # - codechat-bison: 2048
     # - ..-32k: The total amount of input and output tokens adds up to 32k.
@@ -289,6 +291,9 @@ async def chat_completions(body: ChatBody, request: Request):
     if model_name == 'codechat-bison':
         if max_output_tokens > 2048:
             max_output_tokens = 2048
+    elif model_name.find("gemini-pro"):
+        if max_output_tokens > 8192:
+            max_output_tokens = 8192
     elif model_name.find("32k"):
         if max_output_tokens > 16000:
             max_output_tokens = 16000

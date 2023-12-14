@@ -4,18 +4,18 @@
 [![Bagde: OpenAI](https://img.shields.io/badge/OpenAI-%23412991.svg?logo=openai&logoColor=white)](#readme)
 [![Bagde: Python](https://img.shields.io/badge/Python-3670A0?logo=python&logoColor=ffdd54)](#readme)
 
-This project is a drop-in replacement REST API for Vertex AI that is compatible with the OpenAI API specifications.
+This project is a drop-in replacement REST API for Vertex AI (**PaLM 2, Codey, Gemini**) that is compatible with the OpenAI API specifications.
 
 Examples:
 
-| Chat with Bard in Chatbot UI                              | Get help from Bard in VSCode                      |
+| Chat with Gemini in Chatbot UI                            | Get help from Gemini in VSCode                    |
 |-----------------------------------------------------------|---------------------------------------------------|
 | ![Screenshot: Chatbot UI chat](./img/chatbot-ui-chat.png) | ![Screenshot: VSCode chat](./img/vscode-chat.png) |
 
 This project is inspired by the idea of [LocalAI](https://github.com/go-skynet/LocalAI)
 but with the focus on making [Google Cloud Platform Vertex AI PaLM](https://ai.google/) more accessible to anyone.
 
-A Google Cloud Run service is installed that translates the OpenAI API calls to Vertex AI (PaLM).
+A Google Cloud Run service is installed that translates the OpenAI API calls to Vertex AI (PaLM 2, Codey, Gemini).
 
 <p align="center">
   <picture>
@@ -127,7 +127,16 @@ export OPENAI_API_KEY="sk-XYZ"
 uvicorn vertex:app --reload
 ```
 
-Or run with `codechat-bison-32k` 32k model:
+Run with Gemini `gemini-pro` model:
+
+```bash
+export DEBUG="True"
+export OPENAI_API_KEY="sk-XYZ"
+export MODEL_NAME="gemini-pro"
+uvicorn vertex:app --reload
+```
+
+Run with Codey `codechat-bison-32k` model:
 
 ```bash
 export DEBUG="True"

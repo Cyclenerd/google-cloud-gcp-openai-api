@@ -2,6 +2,8 @@ fastapi==0.109.1
 uvicorn==0.24.0
 pydantic==1.10.13
 sse-starlette==1.8.2
-langchain==0.1.11
+langchain==0.1.12
+langchain-core==0.1.32
+langchain-google-vertexai==0.0.1
 transformers==4.36.1
 google-cloud-aiplatform==1.38.1

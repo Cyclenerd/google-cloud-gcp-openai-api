@@ -3,5 +3,5 @@ uvicorn==0.24.0
 pydantic==1.10.13
 sse-starlette==1.8.2
 langchain==0.1.11
-transformers==4.36.1
+transformers==4.38.0
 google-cloud-aiplatform==1.38.1

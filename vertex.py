@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Copyright 2023 Nils Knieling
+# Copyright 2023-2024 Nils Knieling
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ from google.cloud import aiplatform
 
 # LangChain
 import langchain
-from langchain.chat_models import ChatVertexAI
+from langchain_community.chat_models import ChatVertexAI
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
 

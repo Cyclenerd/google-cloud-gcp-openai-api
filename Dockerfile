@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# The python:3.11-slim tag points to the latest release based on Debian 12 (bookworm)
-FROM python:3.11-slim
+# The python:3.12-slim tag points to the latest release based on Debian 12 (bookworm)
+FROM python:3.12-slim
 
 # Labels
 LABEL org.opencontainers.image.title         "OpenAI API for Google Cloud Vertex AI"

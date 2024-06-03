@@ -91,16 +91,19 @@ bash deploy.sh
 
 ## Running Locally
 
-The software was tested on GNU/Linux and macOS with Python 3.11.
+The software was tested on GNU/Linux and macOS with Python 3.12.
 If you want to use the software under Windows, you must set the environment variables with `set` instead of `export`.
+
 You should also create a [virtual environment](https://docs.python.org/3/library/venv.html) with the version of Python you want to use, and activate it before proceeding.
 
 You also need the [Google Cloud CLI](https://cloud.google.com/sdk/docs/install).
 The Google Cloud CLI includes the `gcloud` command-line tool.
 
-Install requirements:
+Initiate a Python virtual environment and install requirements:
 
 ```bash
+python3 -m venv .venv && \
+source .venv/bin/activate && \
 pip install -r requirements.txt
 ```
 

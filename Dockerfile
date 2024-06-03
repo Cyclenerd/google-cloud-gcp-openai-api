@@ -18,10 +18,10 @@ FROM python:3.12-slim
 # Labels
 LABEL org.opencontainers.image.title         "OpenAI API for Google Cloud Vertex AI"
 LABEL org.opencontainers.image.description   "Drop-in replacement REST API for Google Cloud Vertex AI that is compatible with the OpenAI API specifications"
-LABEL org.opencontainers.image.url           "https://hub.docker.com/r/cyclenerd/google-cloud-gcp-openai-api"
+LABEL org.opencontainers.image.url           "https://github.com/Cyclenerd/google-cloud-gcp-openai-api"
 LABEL org.opencontainers.image.authors       "https://github.com/Cyclenerd/google-cloud-gcp-openai-api/graphs/contributors"
 LABEL org.opencontainers.image.documentation "https://github.com/Cyclenerd/google-cloud-gcp-openai-api/blob/master/README.md"
-LABEL org.opencontainers.image.source        "https://github.com/Cyclenerd/google-cloud-gcp-openai-api/pkgs/container/google-cloud-gcp-openai-api"
+LABEL org.opencontainers.image.source        "https://github.com/Cyclenerd/google-cloud-gcp-openai-api/blob/master/Dockerfile"
 
 # Log Python messages immediately instead of being buffered
 ENV PYTHONUNBUFFERED True

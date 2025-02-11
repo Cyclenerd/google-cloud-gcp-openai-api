@@ -4,5 +4,5 @@ pydantic==1.10.15
 sse-starlette==2.1.0
 langchain==0.3.0
 langchain-community==0.3.0
-transformers==4.41.2
+transformers==4.48.0
 google-cloud-aiplatform==1.53.0

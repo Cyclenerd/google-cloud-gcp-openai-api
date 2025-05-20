@@ -1,3 +1,5 @@
 __pycache__/
 faiss_index/
 .venv
+# GCP Credentials
+credentials.json

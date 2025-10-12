@@ -4,6 +4,39 @@
 [![Badge: OpenAI](https://img.shields.io/badge/OpenAI-%23412991.svg?logo=openai&logoColor=white)](#readme)
 [![Badge: Python](https://img.shields.io/badge/Python-3670A0?logo=python&logoColor=ffdd54)](#readme)
 
+---
+
+## Public Archive Notice
+
+This repository has been transitioned to a public archive.
+While development has ceased, the codebase remains available for reference and historical purposes.
+
+**Impact on Current Users:**
+
+* New features and bug fixes will no longer be implemented.
+* Issues and pull requests will not be reviewed or merged.
+* This container image will be delisted from Docker Hub in August 2024. Please make alternative arrangements before then.
+
+**Accessing the Codebase:**
+
+* You can continue to clone, fork, and explore the code at your convenience.
+* The codebase reflects the repository's state at the time of archiving.
+
+**Staying Informed:**
+
+* I recommend considering alternative projects that are actively maintained for your ongoing development needs.
+
+**Contributing:**
+
+* While new contributions are no longer accepted in this repository, feel free to explore forking the codebase and creating your own derivative project.
+
+**Thank You:**
+
+I appreciate your past contributions and interest in this project.
+I hope the archived codebase remains a valuable resource!
+
+---
+
 This project is a drop-in replacement REST API for Vertex AI (**PaLM 2, Codey, Gemini**) that is compatible with the OpenAI API specifications.
 
 Examples:
